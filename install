@@ -1,0 +1,20 @@
+#!/bin/bash
+set -e
+
+IMAGE="progrium/buildstep"
+
+COMMAND=$(cat <<EOF
+export DEBIAN_FRONTEND=noninteractive
+apt-get update
+apt-get install -y software-properties-common python-software-properties
+add-apt-repository ppa:mc3man/trusty-media
+apt-get update
+apt-get install -y ffmpeg
+EOF
+)
+
+ID=$(docker run -d $IMAGE /bin/sh -c "$COMMAND")
+docker attach $ID
+test $(docker wait $ID) -eq 0
+docker commit $ID $IMAGE > /dev/null
+
