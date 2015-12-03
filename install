@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-IMAGE="progrium/buildstep"
+IMAGE="gliderlabs/herokuish"
 
 COMMAND=$(cat <<EOF
 export DEBIAN_FRONTEND=noninteractive
